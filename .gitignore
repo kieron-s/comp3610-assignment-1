@@ -1,0 +1,11 @@
+# Data to not commit 
+data/*.csv
+data/*.parquet
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+
