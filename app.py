@@ -5,11 +5,11 @@ import os
 
 @st.cache_data
 def load_data():
-    trip_path = "data/raw/yellow_tripdata_2024-01.parquet"
-    zone_path = "data/raw/taxi_zone_lookup.csv"
+    trip_url = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-01.parquet"
+    zone_url = "https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv"
     
-    df = pd.read_parquet(trip_path)
-    zones_df = pd.read_csv(zone_path)
+    df = pd.read_parquet(trip_url)
+    zones_df = pd.read_csv(zone_url)
 
     critical_columns = ['tpep_pickup_datetime', 'tpep_dropoff_datetime', 'PULocationID', 'DOLocationID', 'fare_amount']
     df = df.dropna(subset=critical_columns)
