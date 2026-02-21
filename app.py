@@ -71,7 +71,7 @@ with tab1:
     top_zones = top_zones.merge(zones_df[['LocationID', 'Zone']], left_on='PULocationID', right_on='LocationID')
     fig1 = px.bar(top_zones, x='Zone', y='trip_count', title='Top 10 Busiest Pickup Zones')
     st.plotly_chart(fig1, use_container_width=True)
-    st.markdown("**Insight**: Airport zones (JFK/LaGuardia) and Manhattan hubs like Midtown dominate, showing high travel demand from tourists and workers in early 2024.")
+    st.markdown("**Insight**: Airport zones and Manhattan locations like Midtown dominate, showing high travel demand from tourists in early 2024.")
 
     payment_counts = filtered_df['payment_type'].value_counts(normalize=True).reset_index(name='percentage')
     payment_counts['percentage'] *= 100
@@ -84,15 +84,15 @@ with tab2:
     hourly_fare = filtered_df.groupby('pickup_hour')['fare_amount'].mean().reset_index(name='avg_fare')
     fig2 = px.line(hourly_fare, x='pickup_hour', y='avg_fare', title='Average Fare by Hour of Day')
     st.plotly_chart(fig2, use_container_width=True)
-    st.markdown("**Insight**: Fares peak during evening rush (17-20h) and late night, likely due to surge pricing and longer trips after work/entertainment hours.")
+    st.markdown("**Insight**: t, Fares are highest during early mornings which apparently is normal behaviour for taxi services, likely due to airport trips)")
 
     fig3 = px.histogram(filtered_df, x='trip_distance', nbins=50, title='Distribution of Trip Distances')
     fig3.update_layout(xaxis_range=[0, 30])
     st.plotly_chart(fig3, use_container_width=True)
-    st.markdown("**Insight**: Most trips are short (<5 miles), with a clear long tail for airport and cross-city rides — typical for dense urban taxi use.")
+    st.markdown("**Insight**: Most trips are short, which is to be expected in a dense urban environment like NYC. However, there is a long tail of longer trips, likely to/from airports or outer boroughs.")
 
 with tab3:
     weekly = filtered_df.groupby(['pickup_dayofweek', 'pickup_hour']).size().unstack(fill_value=0)
     fig5 = px.imshow(weekly, title='Trips by Day of Week and Hour', color_continuous_scale='YlOrRd')
     st.plotly_chart(fig5, use_container_width=True)
-    st.markdown("**Insight**: Weekday evenings and Friday/Saturday nights show the highest volume, while early weekday mornings are quietest — reflecting commuting and nightlife patterns in NYC.")
+    st.markdown("**Insight**: Weekdays are structured around work hours 7am and 5pm, while weekends show more activity in the afternoons and evenings, reflecting leisure travel patterns.")
