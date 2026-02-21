@@ -11,6 +11,8 @@ def load_data():
     df = pd.read_parquet(trip_url)
     zones_df = pd.read_csv(zone_url)
 
+    df = df.sample(500000, random_state=42) 
+
     critical_columns = ['tpep_pickup_datetime', 'tpep_dropoff_datetime', 'PULocationID', 'DOLocationID', 'fare_amount']
     df = df.dropna(subset=critical_columns)
     df = df[(df['trip_distance'] > 0) & (df['fare_amount'] > 0) & (df['fare_amount'] <= 500) &
